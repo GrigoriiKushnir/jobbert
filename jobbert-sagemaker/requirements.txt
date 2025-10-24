@@ -1,6 +1,3 @@
-boto3==1.40.55
-sentence-transformers==5.1.1
-optimum[onnxruntime]
-onnxscript
+sentence-transformers
 fastapi
 uvicorn

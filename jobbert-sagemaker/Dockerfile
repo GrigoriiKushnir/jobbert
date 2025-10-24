@@ -5,7 +5,6 @@ ENV PYTHONUNBUFFERED=1
 COPY requirements.txt /opt/ml/code/requirements.txt
 RUN pip install --no-cache-dir -r /opt/ml/code/requirements.txt
 
-COPY model /opt/ml/model
 COPY serve.py /opt/ml/code/serve.py
 
 WORKDIR /opt/ml/code

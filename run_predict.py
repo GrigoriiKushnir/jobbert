@@ -29,19 +29,12 @@ def call_using_endpoint():
         Body=json.dumps(payload)
     )
     embeddings = json.loads(response['Body'].read())
-    print(f'Sagemaker model embeddings length: {len(embeddings[0][0])}')
-    print(f'Sagemaker model embeddings {embeddings[0][0][:10]}')
+    print(f'Sagemaker model embeddings length: {len(embeddings[0])}')
+    print(f'Sagemaker model embeddings {embeddings[0][:10]}')
 
 
 def call_using_hf_model():
-    model = SentenceTransformer(
-        'GrishaKushnir/jobbert-onnx',
-        backend='onnx',
-        model_kwargs={
-            'file_name': 'onnx/model.onnx'
-        }
-
-    )
+    model = SentenceTransformer('TechWolf/JobBERT-v3')
     sentences = ['today is sunny']
     embeddings = model.encode(sentences)
     print(f'HF model embeddings length: {len(embeddings[0])}')
@@ -52,7 +45,7 @@ def call_using_hf_model():
 def call_using_local_model():
     response = requests.post(
         'http://127.0.0.1:8080/invocations',
-        json={'inputs': 'today is sunny'},
+        json={'inputs': ['today is sunny']},
         headers={'Content-Type': 'application/json'}
     )
     embeddings = response.json()
@@ -61,9 +54,9 @@ def call_using_local_model():
 
 
 def call():
-    call_using_endpoint()
+    # call_using_endpoint()
     call_using_hf_model()
-    # call_using_local_model()
+    call_using_local_model()
 
 
 if __name__ == '__main__':
