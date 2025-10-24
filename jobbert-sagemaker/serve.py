@@ -10,7 +10,9 @@ logger = logging.getLogger(__name__)
 app = FastAPI()
 
 try:
-    model = SentenceTransformer('TechWolf/JobBERT-v3')
+    model = SentenceTransformer(
+        'TechWolf/JobBERT-v3',
+    )
     logger.info('Model loaded successfully')
 except Exception as e:
     logger.error(f'Failed to load model: {e}')
@@ -33,7 +35,7 @@ def invocations(req: InferenceRequest):
         if not texts:
             raise HTTPException(status_code=400, detail='No input texts provided')
 
-        embeddings = model.encode(texts)
+        embeddings = model.encode(texts, normalize_embeddings=True)
         return embeddings.tolist()
     except Exception as e:
         logger.error(f'Inference error: {e}')

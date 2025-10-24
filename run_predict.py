@@ -36,7 +36,7 @@ def call_using_endpoint():
 def call_using_hf_model():
     model = SentenceTransformer('TechWolf/JobBERT-v3')
     sentences = ['today is sunny']
-    embeddings = model.encode(sentences)
+    embeddings = model.encode(sentences, normalize_embeddings=True)
     print(f'HF model embeddings length: {len(embeddings[0])}')
     print(f'HF model embeddings {embeddings[0][:10]}')
     # print(f'HF model embeddings {embeddings[0]}')
