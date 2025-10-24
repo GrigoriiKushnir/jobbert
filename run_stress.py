@@ -30,7 +30,7 @@ class SageMakerUser(User):
 
     @task
     def query_jobbert(self):
-        payload = {'inputs': 'today is rainy'}
+        payload = {'inputs': ['today is rainy']}
         start_time = time.time()
         try:
             response = BOTO3_CLIENT.invoke_endpoint(
@@ -60,5 +60,5 @@ class SageMakerUser(User):
 
 
 '''
-locust -f stress.py -u 1 -r 10 --run-time 10m --stop-timeout 10
+locust -f run_stress.py -u 100 -r 10 --run-time 10m --stop-timeout 10
 '''

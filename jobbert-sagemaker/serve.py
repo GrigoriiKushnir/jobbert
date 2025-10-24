@@ -11,7 +11,8 @@ app = FastAPI()
 
 try:
     model = SentenceTransformer(
-        'TechWolf/JobBERT-v3',
+        'GrishaKushnir/jobbert-onnx',
+        backend='onnx',
     )
     logger.info('Model loaded successfully')
 except Exception as e:
@@ -35,7 +36,7 @@ def invocations(req: InferenceRequest):
         if not texts:
             raise HTTPException(status_code=400, detail='No input texts provided')
 
-        embeddings = model.encode(texts, normalize_embeddings=True)
+        embeddings = model.encode(texts, normalize_embeddings=True, show_progress_bar=False)
         return embeddings.tolist()
     except Exception as e:
         logger.error(f'Inference error: {e}')

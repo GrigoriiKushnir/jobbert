@@ -2,3 +2,5 @@ sentence-transformers
 fastapi
 gunicorn
 uvicorn
+optimum[onnxruntime]
+onnxscript
