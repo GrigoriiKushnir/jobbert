@@ -152,8 +152,9 @@ def call():
         model_id = sagemaker_models[0]['_id']
     else:
         model_id = register_model(sagemaker_connector_id=sagemaker_connectors[0]['_id'])
-        time.sleep(10)
         print(f'\u2705 Registered model: {model_id}')
+        time.sleep(10)
+        sagemaker_models = get_models(sagemaker_connectors)
 
     if len(sagemaker_models) > 1:
         cleanup_models(sagemaker_models)
