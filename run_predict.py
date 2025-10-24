@@ -54,7 +54,7 @@ def call_using_local_model():
 
 
 def call():
-    # call_using_endpoint()
+    call_using_endpoint()
     call_using_hf_model()
     call_using_local_model()
 

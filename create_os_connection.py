@@ -138,10 +138,13 @@ def call():
     else:
         connector_id = create_connector()
         print(f'\u2705 Created connector: {connector_id}')
+        time.sleep(10)
+        sagemaker_connectors = get_connectors()
 
     if len(sagemaker_connectors) > 1:
         cleanup_models(sagemaker_models)
         cleanup_connectors(sagemaker_connectors)
+
     # Register model
     if sagemaker_models:
         print('\u2705 Model already exists:')
@@ -149,6 +152,7 @@ def call():
         model_id = sagemaker_models[0]['_id']
     else:
         model_id = register_model(sagemaker_connector_id=sagemaker_connectors[0]['_id'])
+        time.sleep(10)
         print(f'\u2705 Registered model: {model_id}')
 
     if len(sagemaker_models) > 1:
@@ -160,6 +164,7 @@ def call():
         f'/_plugins/_ml/models/{model_id}/_deploy'
     )
     print(f'\u2705 Deployed model: {model_id}')
+    time.sleep(10)
     print(json.dumps(sagemaker_models[0], indent=2))
 
 
