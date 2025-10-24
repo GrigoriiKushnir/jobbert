@@ -1,4 +1,5 @@
 import json
+import time
 
 import boto3
 import dotenv
@@ -44,7 +45,7 @@ def create_connector() -> str:
                         'content-type': 'application/json'
                     },
                     'url': settings.SAGEMAKER_ENDPOINT_URL,
-                    'request_body': '{ "inputs": "${parameters.text}" }'
+                    'request_body': '{ "inputs": ["${parameters.text}"] }'
                 }
             ]
         }
@@ -123,6 +124,9 @@ def register_model(sagemaker_connector_id: str):
     )
     return response['model_id']
 
+def cleanup():
+    cleanup_models(get_models(get_connectors()))
+    cleanup_connectors(get_connectors())
 
 def call():
     # Create connector
@@ -138,7 +142,6 @@ def call():
     if len(sagemaker_connectors) > 1:
         cleanup_models(sagemaker_models)
         cleanup_connectors(sagemaker_connectors)
-
     # Register model
     if sagemaker_models:
         print('\u2705 Model already exists:')
@@ -161,6 +164,7 @@ def call():
 
 
 if __name__ == '__main__':
+    # cleanup()
     call()
 
 # (.venv) ➜  jobbert python3 os_query.py

@@ -46,3 +46,20 @@ model=GrishaKushnir/jobbert-onnx
 volume=$PWD/data # share a volume with the Docker container to avoid downloading weights every run
 
 docker run -p 8080:80 -v $volume:/data --pull always ghcr.io/huggingface/text-embeddings-inference:1.8 --model-id $model
+
+# Build and push Docker image
+docker buildx build \
+  --platform linux/amd64 \
+  --output type=docker \
+  --provenance=false \
+  -t jobbertv3:latest .
+
+docker tag jobbertv3:latest \
+080274686453.dkr.ecr.eu-west-3.amazonaws.com/dev/jobbertv3:latest
+
+aws ecr get-login-password --region eu-west-3 \
+| docker login --username AWS --password-stdin \
+080274686453.dkr.ecr.eu-west-3.amazonaws.com
+
+docker push \
+080274686453.dkr.ecr.eu-west-3.amazonaws.com/dev/jobbertv3:latest
