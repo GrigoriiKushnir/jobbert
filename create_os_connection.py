@@ -154,7 +154,6 @@ def call():
         model_id = register_model(sagemaker_connector_id=sagemaker_connectors[0]['_id'])
         print(f'\u2705 Registered model: {model_id}')
         time.sleep(10)
-        sagemaker_models = get_models(sagemaker_connectors)
 
     if len(sagemaker_models) > 1:
         cleanup_models(sagemaker_models)
@@ -165,7 +164,8 @@ def call():
         f'/_plugins/_ml/models/{model_id}/_deploy'
     )
     print(f'\u2705 Deployed model: {model_id}')
-    time.sleep(10)
+    time.sleep(5)
+    sagemaker_models = get_models(sagemaker_connectors)
     print(json.dumps(sagemaker_models[0], indent=2))
 
 
