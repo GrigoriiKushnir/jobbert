@@ -3,7 +3,7 @@ AWS_SERVICE = 'es'
 AWS_ROLE_ARN = 'arn:aws:iam::080274686453:role/sagemaker_admin'
 
 HF_MODEL_INSTANCE_TYPE = 'ml.c5.xlarge'
-SAGEMAKER_ENDPOINT_NAME = f"jobbert3-{HF_MODEL_INSTANCE_TYPE.replace('.', '-')}-1"
+SAGEMAKER_ENDPOINT_NAME = f"jobbert3-{HF_MODEL_INSTANCE_TYPE.replace('.', '-')}-2"
 
 OS_DOMAIN_HOST = 'localhost'
 OS_DOMAIN_PORT = 9201

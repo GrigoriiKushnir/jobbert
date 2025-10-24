@@ -25,7 +25,7 @@ def call_using_endpoint():
         region_name='eu-west-3',
         config=BOTO3_CONFIG
     )
-    payload = {'inputs': f'today is rainy'}
+    payload = {'inputs': f'today is sunny'}
     response = boto3_client.invoke_endpoint(
         EndpointName=settings.SAGEMAKER_ENDPOINT_NAME,
         ContentType='application/json',
@@ -33,7 +33,7 @@ def call_using_endpoint():
     )
     embeddings = json.loads(response['Body'].read())
     print(f'Sagemaker model embeddings length: {len(embeddings[0])}')
-    print(f'Sagemaker model embeddings {embeddings[0]}')
+    print(f'Sagemaker model embeddings {embeddings[0][:10]}')
 
 
 def call_using_hf_model():
@@ -45,26 +45,28 @@ def call_using_hf_model():
         }
 
     )
-    sentences = ['today is rainy']
+    sentences = ['today is sunny']
     embeddings = model.encode(sentences)
     print(f'HF model embeddings length: {len(embeddings[0])}')
+    print(f'HF model embeddings {embeddings[0][:10]}')
     # print(f'HF model embeddings {embeddings[0]}')
 
 
 def call_using_local_model():
     response = requests.post(
         'http://127.0.0.1:8080/embed',
-        json={'inputs': 'today is rainy'},
+        json={'inputs': 'today is sunny'},
         headers={'Content-Type': 'application/json'}
     )
     embeddings = response.json()
     print(f'Local model embeddings length: {len(embeddings[0])}')
+    print(f'Local model embeddings {embeddings[0][:10]}')
 
 
 def call():
     call_using_endpoint()
     # call_using_hf_model()
-    # call_using_local_model()
+    call_using_local_model()
 
 
 if __name__ == '__main__':
