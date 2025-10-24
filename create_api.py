@@ -11,7 +11,6 @@ dotenv.load_dotenv()
 SAGEMAKER_ROLE = 'arn:aws:iam::080274686453:role/sagemaker_admin'
 HF_MODEL_CONFIG = {
     'HF_MODEL_ID': 'GrishaKushnir/jobbert-onnx',
-    'DENSE_PATH': ''
 }
 
 

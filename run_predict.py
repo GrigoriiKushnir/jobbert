@@ -33,7 +33,7 @@ def call_using_endpoint():
     )
     embeddings = json.loads(response['Body'].read())
     print(f'Sagemaker model embeddings length: {len(embeddings[0])}')
-    # print(f'Sagemaker model embeddings {embeddings[0]}')
+    print(f'Sagemaker model embeddings {embeddings[0]}')
 
 
 def call_using_hf_model():
@@ -62,9 +62,9 @@ def call_using_local_model():
 
 
 def call():
-    # call_using_endpoint()
+    call_using_endpoint()
     # call_using_hf_model()
-    call_using_local_model()
+    # call_using_local_model()
 
 
 if __name__ == '__main__':
