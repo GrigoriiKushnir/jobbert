@@ -4,12 +4,13 @@ ENV PYTHONUNBUFFERED=1
 
 COPY requirements.txt /opt/ml/code/requirements.txt
 RUN pip install --no-cache-dir -r /opt/ml/code/requirements.txt
+RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('TechWolf/JobBERT-v3')"
 
 COPY serve.py /opt/ml/code/serve.py
 
 WORKDIR /opt/ml/code
 RUN echo '#!/bin/bash' > /opt/ml/code/serve && \
-    echo 'gunicorn -w 4 --bind 0.0.0.0:80 --timeout 600 --port 8080 -k uvicorn.workers.UvicornWorker' >> /opt/ml/code/serve && \
+    echo 'gunicorn serve:app -w 4 --bind 0.0.0.0:8080 --timeout 600 -k uvicorn.workers.UvicornWorker' >> /opt/ml/code/serve && \
     chmod +x /opt/ml/code/serve
 
 # SageMaker will call this with 'serve' as an argument
