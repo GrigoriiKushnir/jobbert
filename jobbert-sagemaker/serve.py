@@ -21,7 +21,7 @@ except Exception as e:
 
 
 class InferenceRequest(BaseModel):
-    inputs: list[str]
+    input: str
 
 
 @app.get('/ping')
@@ -32,7 +32,7 @@ def ping():
 @app.post('/invocations')
 def invocations(req: InferenceRequest):
     try:
-        texts = req.inputs
+        texts = req.input
         if not texts:
             raise HTTPException(status_code=400, detail='No input texts provided')
 

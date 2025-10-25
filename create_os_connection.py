@@ -45,7 +45,22 @@ def create_connector() -> str:
                         'content-type': 'application/json'
                     },
                     'url': settings.SAGEMAKER_ENDPOINT_URL,
-                    'request_body': '{ "inputs": ["${parameters.text}"] }'
+                    'request_body': '{ "input": "${parameters.input}" }',
+                    'pre_process_function': '''
+                        String text = params.text_docs != null ? params.text_docs[0] : params.query_text;
+                        return '{"parameters": {"input": "' + text + '"}}';
+                    ''',
+                    'post_process_function': '''
+                        def embedding = params instanceof List ? params : params.result;
+                        def shape = [embedding.size()];
+                        def json = "{" +
+                                   "\\"name\\":\\"sentence_embedding\\"," +
+                                   "\\"data_type\\":\\"FLOAT32\\"," +
+                                   "\\"shape\\":" + shape + "," +
+                                   "\\"data\\":" + embedding +
+                                   "}";
+                        return json;
+                    '''
                 }
             ]
         }

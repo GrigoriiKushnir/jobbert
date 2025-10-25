@@ -45,7 +45,7 @@ def call_using_hf_model():
 def call_using_local_model():
     response = requests.post(
         'http://127.0.0.1:8080/invocations',
-        json={'inputs': ['today is sunny']},
+        json={'input': 'today is sunny'},
         headers={'Content-Type': 'application/json'}
     )
     embeddings = response.json()
@@ -55,7 +55,7 @@ def call_using_local_model():
 
 def call():
     # call_using_endpoint()
-    call_using_hf_model()
+    # call_using_hf_model()
     call_using_local_model()
 
 
